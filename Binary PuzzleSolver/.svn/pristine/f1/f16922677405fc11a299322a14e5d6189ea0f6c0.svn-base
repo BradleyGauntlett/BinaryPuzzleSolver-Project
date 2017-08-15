@@ -1,0 +1,12 @@
+class Tuple {
+	int x;
+	int y;
+	int reference;
+	
+	public Tuple(int x, int y, int ref){
+		this.x = x;
+		this.y = y;
+		this.reference = ref;
+	}
+	
+}

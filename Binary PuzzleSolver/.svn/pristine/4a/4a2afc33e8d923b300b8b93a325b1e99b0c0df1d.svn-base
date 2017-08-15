@@ -1,0 +1,67 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+
+@SuppressWarnings("serial")
+public class GameButton extends JButton implements ActionListener {
+
+	int elementState = 0;
+	int valState = 0;
+	boolean checkOne;
+	boolean checkZero;
+	Model test = new Model();
+
+	public GameButton() {
+		this.addActionListener(this);
+		setBackground(Color.BLACK);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		test.checkGrid(View.gameElements);
+		// System.out.println("valState = " + valState);
+		elementState++;
+		elementState %= 3;
+		switch (elementState) {
+		case 0:
+			setText("");
+			setBackground(Color.BLACK);
+			checkZero = false;
+			checkOne = false;
+			valState = 0;
+			break;
+
+		case 1:
+			setText("1");
+			setFont(new Font("Arial", Font.BOLD, 60));
+			setBackground(Color.BLACK);
+			setForeground(Color.WHITE);
+			checkOne = true;
+			checkZero = false;
+			valState++;
+
+			if (valState % 2 != 0) {
+				valState = 1;
+			}
+
+			break;
+
+		case 2:
+			setText("0");
+			setFont(new Font("Arial", Font.BOLD, 60));
+			setBackground(Color.BLACK);
+			setForeground(Color.LIGHT_GRAY);
+			checkZero = true;
+			checkOne = false;
+			valState++;
+			if (valState % 2 == 0) {
+				valState = 2;
+			}
+			break;
+		}
+
+	}
+
+}

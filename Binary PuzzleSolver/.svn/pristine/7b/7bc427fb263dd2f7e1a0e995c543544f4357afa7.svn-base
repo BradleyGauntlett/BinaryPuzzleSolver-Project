@@ -1,0 +1,70 @@
+//package Reports;
+//
+//import java.util.Scanner;
+//
+//public class BacktrackingRecursiveTreeSearch {
+//
+//	static int c = 0;
+//
+//	public static void main(String[] args) {
+//		Scanner in = new Scanner(System.in);
+//		System.out.println("Enter a number to search (1-20");
+//		int find = in.nextInt();
+//		Node newNode = new Node(0);
+//
+//		Node current = new Node(c);
+//		Node root = new Node(0);
+//		Node n1 = new Node(1);
+//		Node n2 = new Node(2);
+//		Node n3 = new Node(3);
+//		Node n4 = new Node(4);
+//		Node n5 = new Node(5);
+//		Node n6 = new Node(6);
+//
+//		root.left = n1;
+//		root.right = n2;
+//		root.left = n3;
+//		root.left.right = n4;
+//		root.right.left = n5;
+//		root.right.right = n6;
+//		
+//		visitNode(root);
+//	}
+//
+//	public static void visitNode(Node node) {
+//	    if(node.left != null) {
+//	        visitNode(node.left);
+//	        if(node.arg == 6){
+//	        	System.out.println("6");
+//	        }
+//	    }
+//	    if(node.right != null) {
+//	        visitNode(node.right);
+//	        if(node.arg == 6){
+//	        	System.out.println("6");
+//	        }
+//	    }
+//	    if(node.left == null && node.right == null) {
+//	        System.out.println("END");
+//	    }
+//	}
+//}
+//// public boolean findN(Node root) {
+//// if (root != null) {
+//// if (root.left != null) {
+//// newNode(c++);
+//// if (root.left.arg == 6) {
+//// System.out.println("found 6");
+//// } else {
+//// c--;
+//// if (root.left.arg == 6) {
+//// System.out.println("found 6");
+//// }
+////
+//// }
+////
+//// }
+////
+//// }
+////
+//// }

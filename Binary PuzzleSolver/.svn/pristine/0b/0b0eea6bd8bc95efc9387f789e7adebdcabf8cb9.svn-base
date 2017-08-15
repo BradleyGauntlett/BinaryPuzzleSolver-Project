@@ -1,0 +1,141 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+/**
+ * 
+ * @author Bradley Gauntlett
+ *
+ */
+
+@SuppressWarnings("serial")
+
+public class View extends JFrame {
+
+	JPanel view = new JPanel();
+	GameButton gameElements[][] = new GameButton[4][4];
+
+	JPanel controlPanel = new JPanel();
+	JButton controlBar[] = new JButton[5];
+
+	JButton clear = new JButton("Clear");
+	JButton check = new JButton("Check");
+	JButton prop = new JButton("Propagate");
+	JButton genPuzzle = new JButton("Generate");
+	JButton hint = new JButton("Hint");
+	JButton solve = new JButton("Solve");
+
+	public static GameButton g = new GameButton();
+
+	public View() {
+		super("Binary Puzzle GUI & Solver");
+		setSize(700, 600);
+		setResizable(false);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+		view.setLayout(new GridLayout(4, 4));
+
+		for (int i = 0; i < gameElements.length; i++) {
+			for (int j = 0; j < gameElements.length; j++) {
+				gameElements[i][j] = new GameButton();
+				view.add(gameElements[i][j]);
+			}
+		}
+
+		controlPanel.add(check);
+		controlPanel.add(prop);
+		controlPanel.add(genPuzzle);
+		controlPanel.add(clear);
+		controlPanel.add(hint);
+		controlPanel.add(solve);
+		controlPanel.setBackground(Color.BLACK);
+		// ------Control bar setup------
+		Color cl = new Color(216, 255, 228);
+		check.setBackground(cl);
+		check.setPreferredSize(new Dimension(100, 40));
+		prop.setBackground(cl);
+		prop.setPreferredSize(new Dimension(100, 40));
+		solve.setBackground(cl);
+		solve.setPreferredSize(new Dimension(100, 40));
+		genPuzzle.setBackground(cl);
+		genPuzzle.setPreferredSize(new Dimension(130, 40));
+		clear.setBackground(cl);
+		clear.setPreferredSize(new Dimension(100, 40));
+		clear.setFont(new Font("Segoe UI", Font.PLAIN, 18).deriveFont(AffineTransform.getScaleInstance(1, 1)));
+		check.setFont(new Font("Segoe UI", Font.PLAIN, 18).deriveFont(AffineTransform.getScaleInstance(1, 1)));
+		genPuzzle.setFont(new Font("Segoe UI", Font.PLAIN, 18).deriveFont(AffineTransform.getScaleInstance(1, 1)));
+		prop.setFont(new Font("Segoe UI", Font.PLAIN, 18).deriveFont(AffineTransform.getScaleInstance(1, 1)));
+
+		hint.setBackground(cl);
+		hint.setPreferredSize(new Dimension(120, 40));
+		hint.setFont(new Font("Segoe UI", Font.PLAIN, 18).deriveFont(AffineTransform.getScaleInstance(1, 1)));
+
+		// -------------------------------
+
+		add(controlPanel, BorderLayout.SOUTH);
+		setVisible(true);
+		add(view);
+
+	}
+
+	/**
+	 * 
+	 * @param ActionListener
+	 *            a
+	 */
+	public void addClearButtonListener(ActionListener a) {
+		clear.addActionListener(a);
+	}
+
+	/**
+	 * 
+	 * @param ActionListener
+	 *            a
+	 */
+	public void addCheckListener(ActionListener a) {
+		check.addActionListener(a);
+
+	}
+
+	/**
+	 * 
+	 * @param ActionListener
+	 *            a
+	 */
+	public void addHintListener(ActionListener a) {
+		hint.addActionListener(a);
+
+	}
+
+	/**
+	 * 
+	 * @param ActionListener
+	 *            a
+	 */
+	public void addPropListener(ActionListener a) {
+		prop.addActionListener(a);
+
+	}
+
+	public GameButton[][] getElements() {
+		return gameElements;
+	}
+
+	/**
+	 * 
+	 * @param ActionListener
+	 *            a
+	 */
+	public void addSolveListener(ActionListener a) {
+		solve.addActionListener(a);
+	}
+
+}

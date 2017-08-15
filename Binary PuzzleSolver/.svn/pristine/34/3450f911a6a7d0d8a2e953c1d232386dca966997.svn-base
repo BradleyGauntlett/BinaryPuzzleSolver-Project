@@ -1,0 +1,73 @@
+
+public class Model {
+	private boolean complete = false;
+	private boolean triplematch;
+	int n = 4;
+
+	public void checkGrid(GameButton[][] grid) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+
+				// -------
+				if ((i == 0 && triplematch == false)) {
+					if ((grid[i][j].elementState == grid[i + 1][j].elementState
+							&& grid[i][j].elementState == grid[i + 2][j].elementState)) {
+						triplematch = true;
+					}
+				}
+
+				if (i == n && triplematch == false) {
+					if ((grid[i][j].elementState == grid[i - 1][j].elementState
+							&& grid[i][j].elementState == grid[i - 2][j].elementState)) {
+						triplematch = true;
+					}
+				}
+				if (j == 0 && triplematch == false) {
+					if ((grid[i][j].elementState == grid[i][j + 1].elementState
+							&& grid[i][j].elementState == grid[i][j + 2].elementState)) {
+						triplematch = true;
+					}
+				}
+				if (j == n && triplematch == false) {
+					if ((grid[i][j].elementState == grid[i][j - 1].elementState
+							&& grid[i][j].elementState == grid[i][j - 2].elementState)) {
+						triplematch = true;
+
+					}
+				}
+
+				try {
+					if (((grid[i][j].elementState == grid[i - 1][j].elementState)
+							&& (grid[i][j].elementState == grid[i + 1][j].elementState)) && triplematch == false) {
+						triplematch = true;
+					}
+
+					if (((grid[i][j].elementState == grid[i][j - 1].elementState)
+							&& (grid[i][j].elementState == grid[i][j + 1].elementState)) && triplematch == false) {
+						triplematch = true;
+					}
+
+				} catch (Exception ArrayIndexOutOfBoundsException) {
+
+				}
+
+				// =====================================================================================
+
+			}
+		}
+
+		if (triplematch == true)
+
+		{
+			System.out.println("Incomplete");
+
+		} else if (triplematch == false) {
+			System.out.println("Complete");
+		}
+	}
+
+	public boolean getIsComplete() {
+		return complete;
+	}
+
+}

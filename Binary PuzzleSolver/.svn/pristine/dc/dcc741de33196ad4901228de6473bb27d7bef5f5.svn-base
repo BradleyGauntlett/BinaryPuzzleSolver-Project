@@ -1,0 +1,322 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+
+import javax.swing.JOptionPane;
+
+/**
+ * 
+ * @author Bradley Gauntlett
+ *
+ */
+public class Controller {
+	private static View view;
+	Color lg = new Color(216, 255, 228);
+	private Model model;
+	private static Controller instance = new Controller();
+
+	private Controller() {
+
+		model = Model.getInstance();
+		view = new View();
+		view.addClearButtonListener(new ClearListener());
+		view.addCheckListener(new CheckListener());
+		view.addHintListener(new HintListener());
+		view.addPropListener(new PropListener());
+		view.addSolveListener(new SolveListener());
+
+	}
+
+	public View getView() {
+		return view;
+	}
+
+	public static GameButton[][] getElements() {
+		return view.getElements();
+	}
+
+	/**
+	 * 
+	 * @return instance of Controller
+	 */
+	public static Controller getInstance() {
+		return instance;
+	}
+
+	/**
+	 * 
+	 * @author Bradley Gauntlett
+	 *
+	 */
+	class ClearListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (int i = 0; i < model.n; i++) {
+				for (int j = 0; j < model.n; j++) {
+					view.gameElements[i][j].elementState = 0;
+					view.gameElements[i][j].valState = 1;
+					view.gameElements[i][j].setText("");
+					view.gameElements[i][j].setBackground(Color.BLACK);
+					view.controlPanel.setBackground(Color.BLACK);
+
+					view.check.setBackground(lg);
+					view.solve.setBackground(lg);
+					view.genPuzzle.setBackground(lg);
+					view.clear.setBackground(lg);
+					view.prop.setBackground(lg);
+					view.hint.setBackground(lg);
+
+					view.check.setForeground(Color.BLACK);
+					view.solve.setForeground(Color.BLACK);
+					view.genPuzzle.setForeground(Color.BLACK);
+					view.clear.setForeground(Color.BLACK);
+					view.prop.setForeground(Color.BLACK);
+					view.hint.setForeground(Color.BLACK);
+
+				}
+			}
+		}
+
+	}
+
+	// -------------------------------
+
+	/**
+	 * 
+	 * @author Bradley Gauntlett
+	 *
+	 */
+	class CheckListener implements ActionListener {
+
+		@Override
+		/**
+		 * @param ActionEvent
+		 *            e
+		 */
+		public void actionPerformed(ActionEvent e) {
+			model.checkGrid(view.gameElements);
+
+			for (int i = 0; i < model.n; i++) {
+				for (int j = 0; j < model.n; j++) {
+					System.out.print("[" + view.gameElements[i][j].valState + "]");
+				}
+				System.out.println();
+			}
+
+			for (int i = 0; i < model.n; i++) {
+				for (int j = 0; j < model.n; j++) {
+					if (model.triplematch == true || model.equalcol == false || model.equalrow == false) {
+						view.gameElements[i][j].setBackground(Color.red);
+						view.gameElements[i][j].setForeground(Color.BLACK);
+						view.controlPanel.setBackground(Color.RED);
+
+						// set button clr
+						view.check.setBackground(Color.BLACK);
+						view.solve.setBackground(Color.BLACK);
+						view.genPuzzle.setBackground(Color.BLACK);
+						view.clear.setBackground(Color.BLACK);
+						view.prop.setBackground(Color.BLACK);
+						view.hint.setBackground(Color.BLACK);
+
+						view.check.setForeground(Color.RED);
+						view.solve.setForeground(Color.RED);
+						view.genPuzzle.setForeground(Color.RED);
+						view.clear.setForeground(Color.RED);
+						view.prop.setForeground(Color.RED);
+						view.hint.setForeground(Color.RED);
+
+					} else {
+						view.gameElements[i][j].setBackground(lg);
+						view.gameElements[i][j].setForeground(Color.BLACK);
+						view.controlPanel.setBackground(lg);
+
+						view.check.setBackground(lg);
+						view.solve.setBackground(lg);
+						view.genPuzzle.setBackground(lg);
+						view.clear.setBackground(lg);
+						view.prop.setBackground(lg);
+						view.hint.setBackground(lg);
+
+						view.check.setForeground(Color.BLACK);
+						view.solve.setForeground(Color.BLACK);
+						view.genPuzzle.setForeground(Color.BLACK);
+						view.clear.setForeground(Color.BLACK);
+						view.prop.setForeground(Color.BLACK);
+						view.hint.setForeground(Color.BLACK);
+
+					}
+
+				}
+
+			}
+
+			if ((model.triplematch == false || model.equalcol == true || model.equalrow == true)) {
+				JOptionPane.showMessageDialog(view, "Complete");
+			} else if (model.triplematch == true || model.equalcol == false || model.equalrow == false) {
+				JOptionPane.showMessageDialog(view, "Incomplete");
+			}
+
+		}
+	}
+
+	/**
+	 * 
+	 * @author Bradley Gauntlett
+	 *
+	 */
+	class HintListener implements ActionListener {
+		@Override
+		/**
+		 * @param ActionEvent
+		 *            e
+		 */
+		public void actionPerformed(ActionEvent e) {
+			String m1 = model.hint1;
+			String m2 = model.hint2;
+			int ch = (int) (Math.random() * 2);
+			if ((model.triplematch == false || model.equalcol == true || model.equalrow == true) && (m1 == "")
+					&& (m2 == "")) {
+				JOptionPane.showMessageDialog(view, "Complete");
+			} else if ((m1 == "") && (m2 == "")) {
+				JOptionPane.showMessageDialog(view, "No hint available");
+			} else if ((ch == 0)) {
+				JOptionPane.showMessageDialog(view, m1);
+			} else if ((ch == 1)) {
+				JOptionPane.showMessageDialog(view, m2);
+			} else if (m1 == "") {
+				JOptionPane.showMessageDialog(view, m2);
+			} else if (m2 == "") {
+				JOptionPane.showMessageDialog(view, m1);
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @author Bradley Gauntlett
+	 *
+	 */
+	class GenListener implements ActionListener {
+
+		@Override
+		/**
+		 * @param ActionEvent
+		 *            arg0
+		 */
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+	}
+
+	/**
+	 * 
+	 * @author Bradley Gauntlett
+	 *
+	 */
+	class PropListener implements ActionListener {
+		@Override
+		/**
+		 * @param ActionEvent
+		 *            e
+		 */
+		public void actionPerformed(ActionEvent e) {
+
+			view.gameElements = model.partSolve(view.gameElements);
+
+			if ((model.triplematch == true || model.equalcol == false || model.equalrow == false)) {
+				JOptionPane.showMessageDialog(view, "Complete");
+			}
+
+			for (int i = 0; i < model.n; i++) {
+				for (int j = 0; j < model.n; j++) {
+					/*
+					 * More conditions needed here
+					 */
+
+					if (view.gameElements[i][j].valState == 1 && view.gameElements[i][j].getText() == "") {
+						view.gameElements[i][j].setText("1");
+
+						view.gameElements[i][j].setFont(new Font("Courier New", Font.BOLD, 60)
+								.deriveFont(AffineTransform.getScaleInstance(1, 1)));
+
+					}
+
+					if (view.gameElements[i][j].valState == 0 && view.gameElements[i][j].getText() == "") {
+						view.gameElements[i][j].setText("0");
+
+						view.gameElements[i][j].setFont(new Font("Courier New", Font.BOLD, 60)
+								.deriveFont(AffineTransform.getScaleInstance(1, 1)));
+
+					}
+				}
+			}
+
+			for (int i = 0; i < model.n; i++) {
+				for (int j = 0; j < model.n; j++) {
+					System.out.print("[" + view.gameElements[i][j].valState + "]");
+				}
+				System.out.println();
+			}
+
+		}
+
+	}
+
+	/**
+	 * 
+	 * @author Bradley Gauntlett
+	 *
+	 */
+	class SolveListener implements ActionListener {
+		@Override
+		/**
+		 * @param ActionEvent
+		 *            e
+		 */
+		public void actionPerformed(ActionEvent e) {
+			view.gameElements = model.partSolve(view.gameElements);
+
+			if ((model.triplematch == true || model.equalcol == false || model.equalrow == false)) {
+				JOptionPane.showMessageDialog(view, "Incomplete");
+			}
+
+			for (int i = 0; i < model.n; i++) {
+				for (int j = 0; j < model.n; j++) {
+					/*
+					 * More conditions needed here
+					 */
+
+					if (view.gameElements[i][j].valState == 1 && view.gameElements[i][j].getText() == "") {
+						view.gameElements[i][j].setText("1");
+
+						view.gameElements[i][j].setFont(new Font("Courier New", Font.BOLD, 60)
+								.deriveFont(AffineTransform.getScaleInstance(1, 1)));
+
+					}
+
+					if (view.gameElements[i][j].valState == 0 && view.gameElements[i][j].getText() == "") {
+						view.gameElements[i][j].setText("0");
+
+						view.gameElements[i][j].setFont(new Font("Courier New", Font.BOLD, 60)
+								.deriveFont(AffineTransform.getScaleInstance(1, 1)));
+
+					}
+				}
+			}
+
+			System.out.println("******************GAME ELEMENTS**************************");
+			for (int i = 0; i < model.n; i++) {
+				for (int j = 0; j < model.n; j++) {
+					System.out.print("[" + view.gameElements[i][j].valState + "]");
+				}
+				System.out.println();
+			}
+
+		}
+	}
+}
+// ---------------------------------

@@ -1,0 +1,85 @@
+
+public class TestSolver {
+
+	int numOfEmptyCell;
+	public boolean solveBruteForce(int pos) {
+		boolean check = false;
+		if (pos < numOfEmptyCell) {
+			setValue(0, emptyListXcoord.get(pos), emptyListYcoord.get(pos));
+			check = solveBruteForce(pos + 1);
+			if (!check) {
+				setValue(1, emptyListXcoord.get(pos), emptyListYcoord.get(pos));
+				check = solveBruteForce(pos + 1);
+			}
+		} else {
+			return validGrid();
+		}
+		return check;
+	}
+
+	public static void main(String[] args) {
+		int n = 4;
+		int[][] grid = new int[][] { 
+			
+			{ 1, 1, 1, 0 }, 
+			{ 0, -1, 1, -1 }, 
+			{ 0, 1, 1, -1 }, 
+			{ 0, -1, 1, 1 } };
+
+		int[][] newgrid = new int[n][n];
+		newgrid = grid;
+
+		// =====================PRINT====================
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+
+				if (grid[i][j] == -1) {
+					System.out.print("[ ]");
+				} else {
+					System.out.print("[" + grid[i][j] + "]");
+				}
+			}
+			System.out.println();
+		}
+
+		// =============SOLVE=============================
+		
+//		try {
+//			for (int i = 0; i < n; i++) {
+//				for (int j = 0; j < n; j++) {
+//
+//					if ((grid[i][j] == -1) && ((grid[i][j + 1] == 1) && (grid[i][j -1] == 1))) {
+//						newgrid[i][j] = 0;
+//					}
+//
+//					if ((grid[i][j] == -1) && ((grid[i + 1][j] == 1) && (grid[i -1][j] == 1))) {
+//						newgrid[i][j] = 0;
+//					}
+//				}
+//			}
+//		} catch (Exception ArrayOutOfBoundsException) {
+//		}
+		
+		
+
+		System.out.println();
+		
+		// =====================PRINT====================
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+
+				if (newgrid[i][j] == -1) {
+					System.out.print("[ ]");
+				} else {
+					System.out.print("[" + newgrid[i][j] + "]");
+				}
+			}
+			System.out.println();
+		}
+		// ==============================================
+
+	}
+
+}

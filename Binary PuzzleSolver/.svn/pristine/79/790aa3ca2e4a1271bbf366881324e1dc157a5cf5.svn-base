@@ -1,0 +1,59 @@
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Controller {
+	private View view;
+	private Model model;
+	private static Controller instance = new Controller();
+
+	private Controller() {
+
+		model = Model.getInstance();
+		view = new View();
+		view.addClearButtonListener(new ClearListener());
+		view.addCheckListener(new CheckListener());
+
+	}
+
+	public static Controller getInstance() {
+		return instance;
+	}
+
+	class ClearListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (int i = 0; i < 4; i++) {
+				for (int j = 0; j < 4; j++) {
+					view.gameElements[i][j].elementState = 0;
+					view.gameElements[i][j].valState = 0;
+					view.gameElements[i][j].setText("");
+
+				}
+			}
+		}
+
+	}
+
+	// -------------------------------
+	class CheckListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			model.checkGrid(view.gameElements);
+
+			for (int i = 0; i < 4; i++) {
+				for (int j = 0; j < 4; j++) {
+					if (model.triplematch == true) {
+						view.gameElements[i][j].setBackground(Color.RED);
+					} else {
+						view.gameElements[i][j].setBackground(Color.GREEN);
+					}
+
+				}
+			}
+
+		}
+	}
+}
+// ---------------------------------

@@ -1,0 +1,250 @@
+import java.awt.Color;
+
+/**
+ * 
+ * @author Bradley Gauntlett
+ *
+ */
+public class Model {
+	// private boolean complete = false;
+	boolean triplematch;
+	int n = 4;
+	private static Model instance = new Model();
+	boolean equalcol = true;
+	boolean equalrow = true;
+	String hint1 = null, hint2 = null;
+
+	/**
+	 * private ctor for Singleton pattern
+	 */
+	private Model() {
+
+	}
+
+	/**
+	 * 
+	 * @param grid
+	 *            GameButton[][]
+	 */
+	public void checkGrid(GameButton[][] grid) {
+		equalcol = true;
+		equalrow = true;
+		triplematch = false;
+		hint1 = "";
+		hint2 = "";
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+
+				// -------F
+				if ((i == 0 && triplematch == false)) {
+					if ((grid[i][j].valState == grid[i + 1][j].valState
+							&& grid[i][j].valState == grid[i + 2][j].valState)) {
+						triplematch = true;
+					}
+				}
+
+				if (i == n && triplematch == false) {
+					if ((grid[i][j].valState == grid[i - 1][j].valState
+							&& grid[i][j].valState == grid[i - 2][j].valState)) {
+						triplematch = true;
+					}
+				}
+				if (j == 0 && triplematch == false) {
+					if ((grid[i][j].valState == grid[i][j + 1].valState
+							&& grid[i][j].valState == grid[i][j + 2].valState)) {
+						triplematch = true;
+					}
+				}
+				if (j == n && triplematch == false) {
+					if ((grid[i][j].valState == grid[i][j - 1].valState
+							&& grid[i][j].valState == grid[i][j - 2].valState)) {
+						triplematch = true;
+
+					}
+				}
+
+				try {
+					if (((grid[i][j].valState == grid[i - 1][j].valState)
+							&& (grid[i][j].valState == grid[i + 1][j].valState)) && triplematch == false) {
+						triplematch = true;
+					}
+
+					if (((grid[i][j].valState == grid[i][j - 1].valState)
+							&& (grid[i][j].valState == grid[i][j + 1].valState)) && triplematch == false) {
+						triplematch = true;
+					}
+
+				} catch (Exception ArrayIndexOutOfBoundsException) {
+
+				}
+
+				// =====================================================================================
+
+			}
+		}
+
+		int onecount = 0;
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+
+				if (grid[i][j].getText() == "1") {
+					onecount++;
+				}
+			}
+			if (onecount != n / 2) {
+				equalrow = false;
+				break;
+			} else {
+				onecount = 0;
+			}
+
+		}
+		if (equalrow == false) {
+			System.out.println("Row with " + (n - onecount) + " ones found");
+			hint1 = "Row with " + (n - onecount) + " ones found";
+		}
+		// -----------
+		int onecount2 = 0;
+
+		for (int c = 0; c < n; c++) {
+			for (int j = 0; j < n; j++) {
+
+				if (grid[j][c].getText() == "1") {
+					onecount2++;
+				}
+			}
+			if (onecount2 % 2 != 0) {
+				equalcol = false;
+				break;
+			} else {
+				equalcol = true;
+			}
+
+		}
+		if (equalcol == false) {
+			System.out.println("Col with " + (onecount2 - n) + " zeros found");
+			hint2 = "Col with " + (onecount2 - n) + " zeros found";
+		}
+
+		if (triplematch == true) {
+			System.out.println("Incomplete");
+		} else if (triplematch == false) {
+			System.out.println("Complete");
+		}
+
+	}
+	// ***************END CHECK*******************
+
+	/////////////////////////// PART SOLVE////////////////////////////////
+
+	public GameButton[][] partSolve(GameButton[][] grid) {
+
+		System.out.println("entered method");
+		try {
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+
+					if ((grid[i][j].getText() == "" )
+							&& ((grid[i][j + 1].valState == 0) && (grid[i][j - 1].valState == 0))) {
+						grid[i][j].valState = 9;
+						grid[i][j].elementState = 0;
+					}
+
+					if ((grid[i][j].getText() == "")
+							&& ((grid[i + 1][j].valState == 0) && (grid[i - 1][j].valState == 0))) {
+						grid[i][j].valState = 9;
+						grid[i][j].elementState = 0;
+
+					}
+
+					if ((grid[i][j].getText() == "")
+							&& ((grid[i][j + 1].valState == 9) && (grid[i][j - 1].valState == 9))) {
+						grid[i][j].valState = 0;
+						grid[i][j].elementState = 1;
+					}
+
+					if ((grid[i][j].getText() == "")
+							&& ((grid[i + 1][j].valState == 9) && (grid[i - 1][j].valState == 9))) {
+						grid[i][j].valState = 0;
+						grid[i][j].elementState = 1;
+					}
+				}
+			}
+		} catch (Exception ArrayOutOfBoundsException) {
+		}
+		// -----------------------------------------------------------------------------
+		try {
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					if (grid[i][j].getText() == "") {
+						if (grid[i][j - 2].valState == 0 && grid[i][j - 1].valState == 0) {
+							grid[i][j].valState = 9;
+							grid[i][j].elementState = 0;
+						}
+					}
+					// -
+					if (grid[i][j].getText() == "") {
+						if (grid[i][j - 2].valState == 0 && grid[i][j - 1].valState == 0) {
+							grid[i][j].valState = 9;
+							grid[i][j].elementState = 0;
+						}
+					}
+					// -
+					if (grid[i][j].getText() == "") {
+						if (grid[i][j + 1].valState == 0 && grid[i][j + 2].valState == 0) {
+							grid[i][j].valState = 9;
+							grid[i][j].elementState = 0;
+						}
+					}
+					// -
+					if (grid[i][j].getText() == "") {
+						if (grid[i][j + 2].valState == 9 && grid[i][j + 1].valState == 9) {
+							grid[i][j].valState = 0;
+							grid[i][j].elementState = 1;
+						}
+					}
+					// -
+					if (grid[i][j].getText() == "") {
+						if (grid[i - 2][j].valState == 9 && grid[i - 1][j].valState == 9) {
+							grid[i][j].valState = 0;
+							grid[i][j].elementState = 1;
+						}
+					}
+					// -
+					if (grid[i][j].getText() == "") {
+						if (grid[i - 2][j].valState == 0 && grid[i - 1][j].valState == 0) {
+							grid[i][j].valState = 9;
+							grid[i][j].elementState = 0;
+						}
+					}
+					// -
+					if (grid[i][j].getText() == "") {
+						if (grid[i + 1][j].valState == 0 && grid[i + 2][j].valState == 0) {
+							grid[i][j].valState = 9;
+							grid[i][j].elementState = 0;
+						}
+					}
+					// -
+					if (grid[i][j].getText() == "") {
+						if (grid[i + 2][j].valState == 0 && grid[i + 1][j].valState == 0) {
+							grid[i][j].valState = 9;
+							grid[i][j].elementState = 0;
+						}
+					}
+				}
+			}
+		} catch (Exception ArrayOutOfBoundsException) {
+		}
+		return grid;
+	}
+	//////////////////////// END PART SOLVE//////////////////////////
+
+	/**
+	 * 
+	 * @return instance of Model
+	 */
+	public static Model getInstance() {
+		return instance;
+	}
+}

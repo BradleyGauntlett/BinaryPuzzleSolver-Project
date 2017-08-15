@@ -1,0 +1,63 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class ProofofConcept_GUIDesign extends JFrame {
+
+	JPanel view = new JPanel();
+	GameButton gameElements[] = new GameButton[16];
+
+	JPanel controlPanel = new JPanel();
+	JButton controlBar[] = new JButton[3];
+
+	JButton clear = new JButton();
+	public static GameButton g = new GameButton();
+
+	public static void main(String args[]) {
+		new ProofofConcept_GUIDesign();
+	}
+
+	public ProofofConcept_GUIDesign() {
+
+		super("Binary Puzzle Game and Solver");
+		setSize(550, 550);
+		setResizable(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+		view.setLayout(new GridLayout(4, 4));
+
+		for (int i = 0; i < gameElements.length; i++) {
+			gameElements[i] = new GameButton();
+			view.add(gameElements[i]);
+		}
+
+		JButton check = new JButton("Check");
+		JButton solve = new JButton("Solve");
+		JButton genPuzzle = new JButton("Generate Puzzle");
+
+		controlPanel.add(check);
+		controlPanel.add(solve);
+		controlPanel.add(genPuzzle);
+
+		// ------Control bar setup------
+		check.setBackground(Color.WHITE);
+		check.setPreferredSize(new Dimension(160, 40));
+		solve.setBackground(Color.WHITE);
+		solve.setPreferredSize(new Dimension(160, 40));
+		genPuzzle.setBackground(Color.WHITE);
+		genPuzzle.setPreferredSize(new Dimension(180, 40));
+		// -------------------------------
+
+		add(controlPanel, BorderLayout.SOUTH);
+		setVisible(true);
+		add(view);
+
+	}
+
+}

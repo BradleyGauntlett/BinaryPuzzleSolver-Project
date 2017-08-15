@@ -1,0 +1,7 @@
+Import files into Eclipse
+and run
+
+or run through command line/terminal 
+Linux: javac <program.java>
+	java <program>
+

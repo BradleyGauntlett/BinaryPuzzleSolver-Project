@@ -1,0 +1,14 @@
+package Reports;
+
+import java.util.Scanner;
+
+public class BacktrackingRecursiveTreeSearch {
+	public static void main(String [] args){
+		Scanner in = new Scanner(System.in);
+		System.out.println("Enter a number to search (1-20");
+		int find = in.nextInt();
+		
+		
+	}
+	
+}

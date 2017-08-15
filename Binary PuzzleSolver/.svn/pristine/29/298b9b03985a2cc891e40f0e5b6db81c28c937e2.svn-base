@@ -1,0 +1,17 @@
+package Reports;
+
+public class Node {
+	public Node left;
+	public Node right;
+	public int arg;
+
+	public Node(int arg) {
+		this.arg = arg;
+	}
+
+	public void nodeToString() {
+		System.out.println(arg);
+	}
+
+	}
+}

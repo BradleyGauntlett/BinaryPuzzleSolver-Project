@@ -1,0 +1,109 @@
+import java.util.ArrayList;
+
+public class TestSolver {
+	static int n = 4;
+	static int[][] grid = new int[][] {
+
+			{ 1, 0, 1, 0 }, { 1, -1, 0, 0 }, { 0, 0, 1, 1 }, { 0, 1, -1, 1 } };
+	static int GridX;
+	static int GridY;
+
+	
+
+	public static void main(String[] args) {
+
+		int[][] newgrid = new int[n][n];
+		newgrid = grid;
+
+		// =====================PRINT====================
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+
+				if (grid[i][j] == -1) {
+					System.out.print("[ ]");
+				} else {
+					System.out.print("[" + grid[i][j] + "]");
+				}
+			}
+			System.out.println();
+		}
+
+		// =============SOLVE=============================
+
+		try {
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+
+					if ((grid[i][j] == -1) && ((grid[i][j + 1] == 1) && (grid[i][j - 1] == 1))) {
+						newgrid[i][j] = 0;
+					}
+
+					if ((grid[i][j] == -1) && ((grid[i + 1][j] == 1) && (grid[i - 1][j] == 1))) {
+						newgrid[i][j] = 0;
+					}
+
+					if ((grid[i][j] == -1) && ((grid[i][j + 1] == 0) && (grid[i][j - 1] == 0))) {
+						newgrid[i][j] = 1;
+					}
+
+					if ((grid[i][j] == -1) && ((grid[i + 1][j] == 0) && (grid[i - 1][j] == 0))) {
+						newgrid[i][j] = 1;
+					}
+				}
+			}
+		} catch (Exception ArrayOutOfBoundsException) {
+		}
+
+		try {
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					if (grid[i][j] == -1) {
+						if (grid[i - 2][j] == 0 && grid[i - 1][j] == 0) {
+							newgrid[i][j] = 0;
+						}
+					}
+				}
+			}
+		} catch (Exception ArrayOutOfBoundsException) {
+		}
+
+		System.out.println();
+
+		// =====================PRINT====================
+		int pos = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+
+				if (newgrid[i][j] == -1) {
+					System.out.print("[ ]");
+				} else {
+					System.out.print("[" + newgrid[i][j] + "]");
+				}
+			}
+			System.out.println();
+		}
+
+		// ==============================================
+
+		// ArrayList<Tuple> store = new ArrayList<Tuple>();
+		// int ctr = 0;
+		// Tuple t = null;
+		System.out.println();
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+
+				if (newgrid[i][j] == -1) {
+					// t = new Tuple(i, j, ctr++);
+					// store.add(t);
+					// pos = t.reference;
+					System.out.print("[ ]");
+				} else {
+					System.out.print("[" + newgrid[i][j] + "]");
+				}
+			}
+			System.out.println();
+		}
+		// boolSolver(pos);
+	}
+}

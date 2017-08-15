@@ -1,0 +1,14 @@
+
+public class Model {
+	private boolean complete = false;
+
+	public void checkGrid(GameButton[] gameElements) {
+
+	}
+
+	public boolean getIsComplete() {
+		return complete;
+	}
+	
+
+}

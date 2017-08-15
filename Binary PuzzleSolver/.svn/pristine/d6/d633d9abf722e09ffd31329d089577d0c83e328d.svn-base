@@ -1,0 +1,15 @@
+package Reports;
+
+public class Node {
+	public Node left;
+	public Node right;
+	public int d;
+
+	public Node(int d) {
+		this.d = d;
+	}
+
+	public void printNode() {
+		System.out.println(d);
+	}
+}

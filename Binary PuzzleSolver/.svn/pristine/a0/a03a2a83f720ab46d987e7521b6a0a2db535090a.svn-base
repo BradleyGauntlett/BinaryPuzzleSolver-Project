@@ -1,0 +1,31 @@
+import static org.junit.Assert.*;
+
+import javax.swing.JButton;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class ModelTest {
+
+	Model model;
+
+	@Before
+	public void setup() {
+		model = model.getInstance();
+	}
+
+	@Test
+	/**
+	 * refactoring: created checkGrid in Model.java
+	 */
+	public void testCheckMethod() {
+		GameButton gameElements[][] = new GameButton[4][4];
+		model.checkGrid(gameElements);
+	}
+
+	@Test
+	public void test() {
+
+	}
+
+}

@@ -1,0 +1,39 @@
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class ProofofConcept_GUIDesign extends JFrame {
+
+	JPanel view = new JPanel();
+	GameButton gameElements[] = new GameButton[64];
+	JButton clear = new JButton();
+	public static GameButton g = new GameButton();
+
+	public static void main(String args[]) {
+		new ProofofConcept_GUIDesign();			
+		}
+		
+	public ProofofConcept_GUIDesign() {
+		
+		super("Binary Puzzle Game and Solver");
+		setSize(550, 550);
+		setResizable(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		view.setLayout(new GridLayout(8, 8));
+		
+		
+		for (int i = 0; i < gameElements.length; i++) {
+			gameElements[i] = new GameButton();
+			view.add(gameElements[i]);
+		}
+		
+		setVisible(true);
+		add(view);
+	}
+
+	
+
+}

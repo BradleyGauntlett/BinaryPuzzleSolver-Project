@@ -1,0 +1,93 @@
+import java.awt.Color;
+
+/**
+ * 
+ * @author Bradley Gauntlett
+ *
+ */
+public class Model {
+	private boolean complete = false;
+	boolean triplematch;
+	int n = 4;
+	private static Model instance = new Model();
+
+	/**
+	 * private ctor for Singleton pattern
+	 */
+	private Model() {
+
+	}
+
+	/**
+	 * 
+	 * @param grid
+	 *            GameButton[][]
+	 */
+	public void checkGrid(GameButton[][] grid) {
+		triplematch = false;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+
+				// -------F
+				if ((i == 0 && triplematch == false)) {
+					if ((grid[i][j].valState == grid[i + 1][j].valState
+							&& grid[i][j].valState == grid[i + 2][j].valState)) {
+						triplematch = true;
+					}
+				}
+
+				if (i == n && triplematch == false) {
+					if ((grid[i][j].valState == grid[i - 1][j].valState
+							&& grid[i][j].valState == grid[i - 2][j].valState)) {
+						triplematch = true;
+					}
+				}
+				if (j == 0 && triplematch == false) {
+					if ((grid[i][j].valState == grid[i][j + 1].valState
+							&& grid[i][j].valState == grid[i][j + 2].valState)) {
+						triplematch = true;
+					}
+				}
+				if (j == n && triplematch == false) {
+					if ((grid[i][j].valState == grid[i][j - 1].valState
+							&& grid[i][j].valState == grid[i][j - 2].valState)) {
+						triplematch = true;
+
+					}
+				}
+
+				try {
+					if (((grid[i][j].valState == grid[i - 1][j].valState)
+							&& (grid[i][j].valState == grid[i + 1][j].valState)) && triplematch == false) {
+						triplematch = true;
+					}
+
+					if (((grid[i][j].valState == grid[i][j - 1].valState)
+							&& (grid[i][j].valState == grid[i][j + 1].valState)) && triplematch == false) {
+						triplematch = true;
+					}
+
+				} catch (Exception ArrayIndexOutOfBoundsException) {
+
+				}
+
+				// =====================================================================================
+
+			}
+		}
+
+		if (triplematch == true) {
+			System.out.println("Incomplete");
+		} else if (triplematch == false) {
+			System.out.println("Complete");
+		}
+	}
+
+	/**
+	 * 
+	 * @return instance of Model
+	 */
+	public static Model getInstance() {
+		return instance;
+	}
+}

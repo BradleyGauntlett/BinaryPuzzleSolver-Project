@@ -1,0 +1,74 @@
+package Test;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * 
+ * @author Bradley Gauntlett
+ * 
+ *         JUnit TDD code for testing validate method and solve method before
+ *         integration with GUI
+ *
+ */
+public class PuzzleTest {
+
+	PuzzleSolver ps;
+
+	@Before
+	public void setup() {
+		ps = new PuzzleSolver();	
+	}
+
+	/**
+	 * Testing Validate method for a wrong solution
+	 */
+	@Test
+	public void testCheckValidFalse() {
+		int[][] solgrid = new int[][] { { 1, 0, 9, 0 }, { 0, 9, 0, 1 }, { 9, 1, 0, 1 }, { 1, 0, 1, 9 } };
+
+		ps.validate(solgrid);
+		assertEquals(ps.validate(solgrid), false);
+	}
+
+	/**
+	 * Testing Validate method for a correct solution
+	 */
+	@Test
+	public void testCheckValidTrue() {
+		int[][] solgrid = new int[][] { { 1, 0, 1, 0 }, { 0, 1, 0, 1 }, { 0, 1, 0, 1 }, { 1, 0, 1, 0 } };
+
+		boolean check = ps.validate(solgrid);
+		assertEquals(check, true);
+	}
+
+	/**
+	 * Testing the isValid method, choosing an arbitrary coordinate to test
+	 * method on (all choices should be validfor this scenario
+	 */
+	@Test
+	public void testIsValid() {
+		int[][] solgrid = new int[][] { { 1, 0, 1, 0 }, { 0, 1, 0, 1 }, { 0, 1, 0, 1 }, { 1, 0, 1, 0 } };
+		boolean check = ps.isValid(solgrid, 2, 3);
+		assertEquals(check, true);
+	}
+
+	/**
+	 * Testing the isValid method on all choices - all should be valid for this
+	 * scenario
+	 */
+	@Test
+	public void testAllIsValid() {
+		int[][] solgrid = new int[][] { { 1, 0, 1, 0 }, { 0, 1, 0, 1 }, { 0, 1, 0, 1 }, { 1, 0, 1, 0 } };
+		boolean check = false;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				check = ps.isValid(solgrid, i, j);
+				assertEquals(check, true);
+			}
+		}
+	}
+
+}
